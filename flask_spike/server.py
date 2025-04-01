@@ -7,6 +7,9 @@ import db_connector
 
 app = Flask(__name__)
 
+#
+# Non interessante
+#
 def handle_cors(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
@@ -17,8 +20,8 @@ def handle_cors(f):
                 'Access-Control-Allow-Headers': 'Content-Type'
             })
         return f(*args, **kwargs)
-
     return wrapper
+
 
 @app.route('/test-get-user', methods=['GET', 'OPTIONS'], strict_slashes=False)
 def test_get_user():
@@ -37,7 +40,6 @@ def test_get_all_users():
 @app.route('/add-user', methods=['POST', 'OPTIONS'], strict_slashes=False)
 @handle_cors
 def add_user():
-    print('add-user')
     try:
         data = request.get_json(force=True)
         user_data = data.get("user")

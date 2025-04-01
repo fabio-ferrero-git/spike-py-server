@@ -10,7 +10,7 @@ echo "Waiting for MySQL to initialize..."
 # Wait for MySQL to be ready
 until docker exec mysql-container mysql -uroot -proot -e "SELECT 1" &> /dev/null
 do
-  echo "MySQL is unavailable - sleeping"
+  echo "Initializing MySQL..."
   sleep 1
 done
 

@@ -13,20 +13,36 @@ def create_db_connection():
 def get_single_user(user_id):
     cnx = create_db_connection()
     cursor = cnx.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM users where id = %s", (user_id,))
-    result = cursor.fetchone()
-    print(result)
-    return result
+    try:
+        cursor.execute("SELECT * FROM users where id = %s", (user_id,))
+        result = cursor.fetchone()
+        print(result)
+        return result
+    except mysql.connector.Error as error:
+        print("Failed to insert into MySQL table {}".format(error))
+    finally:
+        if cnx.is_connected():
+            cursor.close()
+            cnx.close()
+            print("MySQL connection is closed")
 
 
 def get_all_users():
     cnx = create_db_connection()
     cursor = cnx.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM users")
-    result = cursor.fetchall()
-    for u in result:
-        print(u)
-    return result
+    try:
+        cursor.execute("SELECT * FROM users")
+        result = cursor.fetchall()
+        for u in result:
+            print(u)
+        return result
+    except mysql.connector.Error as error:
+        print("Failed to insert into MySQL table {}".format(error))
+    finally:
+        if cnx.is_connected():
+            cursor.close()
+            cnx.close()
+            print("MySQL connection is closed")
 
 
 def insert_user(user_data):
@@ -46,7 +62,8 @@ def insert_user(user_data):
             cnx.close()
             print("MySQL connection is closed")
 
+
 if __name__ == '__main__':
-    get_single_user(1)
-    #get_all_users()
-    # insert_user()
+    get_single_user(3)
+    # get_all_users()
+    # insert_user({'name': 'Pippo', 'email': 'pippo@example.com'})

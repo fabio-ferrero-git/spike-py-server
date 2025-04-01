@@ -14,8 +14,10 @@ Waiting for MySQL to initialize...
 sleep 15
 
 docker exec -i mysql-container mysql -uroot -proot << EOF
+
 CREATE DATABASE mydatabase;
 USE mydatabase;
+
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
@@ -25,6 +27,7 @@ CREATE TABLE users (
 INSERT INTO users (name, email) VALUES
 ('John Doe', 'john@example.com'),
 ('Fabio', 'fabio@example.com');
+
 EOF
 
 echo "
